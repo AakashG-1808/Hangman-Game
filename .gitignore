@@ -3,8 +3,5 @@ __pycache__/
 *.py[codz]
 *$py.class
 
-# Environments
-.venv/
-
 # Visual Studio Code
 .vscode/
