@@ -1,4 +1,4 @@
-# <h1 align="center">🪢🙍 H A N G M A N   G A M E 🎮</h1>
+# <h1 align="center">🪢🙍 HANGMAN  GAME 🎮</h1>
 ---
 This project is a fully interactive Hangman game built using Python and wxPython.
 It features a polished graphical interface, multiple difficulty levels, keyboard shortcuts, 
