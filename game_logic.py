@@ -1,4 +1,3 @@
-# game_logic.py
 import random
 import os
 import csv
@@ -13,15 +12,15 @@ def random_word(difficulty, words_file="words.txt"):
         words = [w.strip() for w in f if w.strip()]
 
     if difficulty == "easy":
-        pool = [w for w in words if 3 <= len(w.replace(" ", "")) <= 6]
+        word = [w for w in words if 3 <= len(w.replace(" ", "")) <= 6]
     elif difficulty == "medium":
-        pool = [w for w in words if 7 <= len(w.replace(" ", "")) <= 10]
+        word = [w for w in words if 7 <= len(w.replace(" ", "")) <= 10]
     elif difficulty == "hard":
-        pool = [w for w in words if len(w.replace(" ", "")) >= 11]
+        word = [w for w in words if len(w.replace(" ", "")) >= 11]
     else:
         print("Invalid difficulty")
 
-    return random.choice(pool or words)
+    return random.choice(word or words)
 
 def make_display(secret):
     return [" " if ch == " " else "_" for ch in secret]
@@ -79,9 +78,7 @@ class GameState:
         return new_secret
 
 
-# -----------------------------
 # CSV-BASED HIGH SCORE MANAGER
-# -----------------------------
 class HighScoreManagerCSV:
     def __init__(self, filename=HIGHSCORE_CSV):
         self.filename = filename
@@ -100,7 +97,7 @@ class HighScoreManagerCSV:
                 secret,
                 lives,
                 guesses,
-                datetime.utcnow().isoformat() + "Z"
+                datetime.now().isoformat() + "Z"
             ])
 
     def get_top(self, limit=10):

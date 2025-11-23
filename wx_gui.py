@@ -10,7 +10,7 @@ def main():
     frame = wx.Frame(None, title="Hangman Game", size=(920,640))
     panel = wx.Panel(frame)
 
-    # Top bar ----------------------------------------------------
+    # Top bar 
     top_sizer = wx.BoxSizer(wx.HORIZONTAL)
     top_sizer.Add(wx.StaticText(panel, label="Difficulty:"), 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 6)
 
@@ -26,7 +26,7 @@ def main():
 
     top_sizer.AddStretchSpacer(1)
 
-    # Game panel -------------------------------------------------
+    # Game panel 
     game_panel = wx.Panel(panel)
     game_panel.SetMinSize((800, 480))
 
@@ -37,9 +37,8 @@ def main():
 
     state = {}
 
-    # ------------------------------------------------------------
     # Build Game UI
-    # ------------------------------------------------------------
+    
     def build_game_ui(difficulty, secret_word):
         game_panel.DestroyChildren()
         if game_panel.GetSizer():
@@ -50,7 +49,7 @@ def main():
         state["gs"] = gs
         state["difficulty"] = difficulty
 
-        # ASCII + Word -------------------------------------------
+        # ASCII + Word 
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         ascii_ctrl = wx.TextCtrl(
             game_panel, value=HANGMAN_STAGES[0],
@@ -68,7 +67,7 @@ def main():
 
         vbox.Add(hbox, 0, wx.ALL | wx.EXPAND, 6)
 
-        # Status ---------------------------------------------------
+        # Status 
         guessed_val = wx.StaticText(game_panel, label="None")
         lives_val = wx.StaticText(game_panel, label=str(gs.lives))
 
@@ -79,7 +78,7 @@ def main():
 
         vbox.AddSpacer(12)
 
-        # Input rows ----------------------------------------------
+        # Input rows 
         entry_letter = wx.TextCtrl(game_panel, size=(80, -1), style=wx.TE_PROCESS_ENTER)
         btn_guess_letter = wx.Button(game_panel, label="Guess Letter")
 
@@ -98,7 +97,7 @@ def main():
         row2.Add(btn_guess_full, 0)
         vbox.Add(row2, 0, wx.ALL | wx.EXPAND, 6)
 
-        # Lower buttons -------------------------------------------
+        # Lower buttons
         btn_restart = wx.Button(game_panel, label="Restart (Ctrl+R)")
         btn_quit = wx.Button(game_panel, label="Quit (ESC)")
 
@@ -124,9 +123,7 @@ def main():
             "btn_quit": btn_quit,
         })
 
-        # --------------------------------------------------------
-        # UI update helper
-        # --------------------------------------------------------
+        # UI update
         def update_ui():
             word_display.SetLabel(" ".join(gs.display))
             guessed_val.SetLabel(", ".join(sorted(gs.guessed)) if gs.guessed else "None")
@@ -134,9 +131,7 @@ def main():
             wrong = gs.wrong_count()
             ascii_ctrl.SetValue(HANGMAN_STAGES[min(wrong, len(HANGMAN_STAGES)-1)])
 
-        # --------------------------------------------------------
         # Guess handlers
-        # --------------------------------------------------------
         def guess_letter(evt=None):
             letter = entry_letter.GetValue().strip().lower()
             entry_letter.SetValue("")
@@ -145,6 +140,8 @@ def main():
             status, _ = gs.guess_letter(letter)
             if status == "invalid":
                 wx.MessageBox("Enter a single A-Z letter.", "Invalid")
+            elif status == "already":
+                wx.MessageBox(f"You already guessed {letter}, try another.", "Already Guessed")
             update_ui()
             if gs.is_won(): win()
             elif gs.is_lost(): lose()
@@ -159,7 +156,6 @@ def main():
             if result is True: win()
             elif gs.is_lost(): lose()
 
-        # --------------------------------------------------------
         def win():
             dlg = wx.TextEntryDialog(frame, "You won! Enter your name:", "Victory!")
             name = "Anonymous"
@@ -173,9 +169,7 @@ def main():
             ascii_ctrl.SetValue(HANGMAN_STAGES[-1])
             wx.MessageBox(f"You lost! Word was: {gs.secret}", "Game Over")
 
-        # --------------------------------------------------------
-        # Restart / Quit handlers
-        # --------------------------------------------------------
+        # Restart / Quit
         def restart(evt=None):
             new_word = gs.restart(difficulty)
             build_game_ui(difficulty, new_word)
@@ -183,9 +177,7 @@ def main():
         def quit_game(evt=None):
             frame.Close()
 
-        # --------------------------------------------------------
         # Bind inputs + buttons + Enter events
-        # --------------------------------------------------------
         btn_guess_letter.Bind(wx.EVT_BUTTON, guess_letter)
         btn_guess_full.Bind(wx.EVT_BUTTON, guess_full)
         entry_letter.Bind(wx.EVT_TEXT_ENTER, guess_letter)
@@ -193,9 +185,7 @@ def main():
         btn_restart.Bind(wx.EVT_BUTTON, restart)
         btn_quit.Bind(wx.EVT_BUTTON, quit_game)
 
-        # --------------------------------------------------------
         # GLOBAL KEYBOARD HOOK (Ctrl+R, ESC)
-        # --------------------------------------------------------
         def on_key(event):
             key = event.GetKeyCode()
 
@@ -216,7 +206,6 @@ def main():
         entry_letter.SetFocus()
         update_ui()
 
-    # ------------------------------------------------------------
     def on_start(evt):
         diff = choice_diff.GetStringSelection() or "easy"
         secret = random_word(diff)
@@ -228,7 +217,7 @@ def main():
             wx.MessageBox("No scores yet!", "High Scores")
             return
         msg = "\n".join(
-            f"{i+1}. {e['name']} - {e['difficulty']} - lives:{e['lives']} - word:{e['secret']}"
+            f"{i+1}. {e['name']} - {e['difficulty']} - lives: {e['lives']} - word: {e['secret']}"
             for i, e in enumerate(top)
         )
         wx.MessageBox(msg, "High Scores")

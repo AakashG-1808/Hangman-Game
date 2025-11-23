@@ -1,6 +1,3 @@
-# hangman_stages.py
-# ASCII art used for hangman stages
-
 HANGMAN_STAGES = [
 r"""
     
