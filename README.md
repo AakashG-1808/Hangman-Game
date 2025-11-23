@@ -8,10 +8,10 @@ and a persistent high-score system — all packaged in a modular, beginner-frien
 
 1. Clone the repo into your system.
 
-2. Install requirements:
+2. Install requirements:<br>
    `pip install -r requirements.txt`
    
-3. Run the Script:
+3. Run the Script:<br>
    `python run_game.py`
 
 4. Choose difficulty and start the game.
