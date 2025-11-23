@@ -1,4 +1,4 @@
-# Hangman-Game 
+# <h1 align="center">🪢🙍 H A N G M A N  G A M E 🎮</h1>
 ---
 This project is a fully interactive Hangman game built using Python and wxPython.
 It features a polished graphical interface, multiple difficulty levels, keyboard shortcuts, 
@@ -17,3 +17,4 @@ and a persistent high-score system — all packaged in a modular, beginner-frien
 4. Choose difficulty and start the game.
    
 5. Enjoy the game :)
+
