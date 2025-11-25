@@ -11,16 +11,16 @@ def random_word(difficulty):
     words = [w for w in words if w.isalpha()]
 
     if difficulty == "easy":
-        pool = [w for w in words if 3 <= len(w) <= 6]
+        word = [w for w in words if 3 <= len(w) <= 6]
     elif difficulty == "medium":
-        pool = [w for w in words if 7 <= len(w) <= 10]
+        word = [w for w in words if 7 <= len(w) <= 10]
     elif difficulty == "hard":
-        pool = [w for w in words if len(w) >= 11]
+        word = [w for w in words if len(w) >= 11]
     else:
         print("Invalid difficulty")
-        pool = words
+        word = words
 
-    return random.choice(pool or words)
+    return random.choice(word or words)
 
 
 def make_display(secret):
