@@ -2,25 +2,26 @@ import random
 import os
 import csv
 from datetime import datetime
+from wordfreq import top_n_list
 
 HIGHSCORE_CSV = "highscores.csv"
 
-def random_word(difficulty, words_file="words.txt"):
-    if not os.path.exists(words_file):
-        print(f"Words file not found: {words_file}")
-    with open(words_file, "r") as f:
-        words = [w.strip() for w in f if w.strip()]
+def random_word(difficulty):
+    words = top_n_list("en", 10000)
+    words = [w for w in words if w.isalpha()]
 
     if difficulty == "easy":
-        word = [w for w in words if 3 <= len(w.replace(" ", "")) <= 6]
+        pool = [w for w in words if 3 <= len(w) <= 6]
     elif difficulty == "medium":
-        word = [w for w in words if 7 <= len(w.replace(" ", "")) <= 10]
+        pool = [w for w in words if 7 <= len(w) <= 10]
     elif difficulty == "hard":
-        word = [w for w in words if len(w.replace(" ", "")) >= 11]
+        pool = [w for w in words if len(w) >= 11]
     else:
         print("Invalid difficulty")
+        pool = words
 
-    return random.choice(word or words)
+    return random.choice(pool or words)
+
 
 def make_display(secret):
     return [" " if ch == " " else "_" for ch in secret]
