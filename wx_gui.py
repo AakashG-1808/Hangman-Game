@@ -9,6 +9,7 @@ def main():
     app = wx.App(False)
     frame = wx.Frame(None, title="Hangman Game", size=(920,640))
     panel = wx.Panel(frame)
+    panel.SetBackgroundColour("turquoise")
 
     # Top bar 
     top_sizer = wx.BoxSizer(wx.HORIZONTAL)
